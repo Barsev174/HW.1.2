@@ -6,6 +6,7 @@ import org.example.exception.NullItemException;
 import org.example.exception.StorageIsFullException;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class IntegerListImpl implements IntegerList {
 
@@ -194,6 +195,82 @@ public class IntegerListImpl implements IntegerList {
         arr[indexA] = arr[indexB];
         arr[indexB] = tmp;
     }
+    public Integer[] bubbleSort(Integer[] array) {
+        for (int i = 0; i < array.length - 1; i++) {
+            for (int j = i + 1; j < array.length; j++) {
+                int temp = 0;
+                if (array[j] < array[i]) {
+                    temp = array[i];
+                    array[i] = array[j];
+                    array[j] = temp;
+                }
+            }
+        }
+//        System.out.println(Arrays.toString(array));
+        return array;
+    }
 
+    // выбором
+    public Integer[] selectionSort(Integer[] array) {
+        for (int i = 0; i < array.length - 1; i++) {
+            int min = array[i];
+            int indexMin = i;
+            int temp = 0;
+            for (int j = i + 1; j < array.length; j++) {
+                if (array[j] < min) {
+                    min = array[j];
+                    indexMin = j;
+                }
+            }
+            temp = array[i];
+            array[i] = array[indexMin];
+            array[indexMin] = temp;
+        }
+
+//        System.out.println(Arrays.toString(array));
+        return array;
+    }
+
+    // вставками
+    public Integer[] insertionSort(Integer[] array) {
+        for (int i = 1; i < array.length; i++) {
+            int temp = 0;
+            int currIndex = i;
+            for (int j = i - 1; j >= 0; j--) {
+                if (array[currIndex] < array[j]) {
+                    temp = array[currIndex];
+                    array[currIndex] = array[j];
+                    array[j] = temp;
+                    currIndex--;
+                } else {
+                    break;
+                }
+            }
+        }
+
+        System.out.println(Arrays.toString(array));
+        return array;
+    }
+
+    public void sortTest() {
+        Integer[] array = new Integer[100_000];
+        Random random = new Random();
+
+        for (int i = 0; i < array.length; i++) {
+            array[i] = random.nextInt(50_000);
+        }
+
+        long start = System.currentTimeMillis();
+        this.bubbleSort(array.clone());
+        System.out.println("Bubble sort: " + ((System.currentTimeMillis() - start) / 1000.0) + " s");
+
+        start = System.currentTimeMillis();
+        this.selectionSort(array.clone());
+        System.out.println("Selection sort: " + ((System.currentTimeMillis() - start) / 1000.0) + " s");
+
+        start = System.currentTimeMillis();
+        this.insertionSort(array.clone());
+        System.out.println("Insertion sort: " + ((System.currentTimeMillis() - start) / 1000.0) + " s");
+    }
 
 }
